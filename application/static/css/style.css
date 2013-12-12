@@ -1,0 +1,41 @@
+.navbar-inverse .navbar-brand {
+    color: #ffffff;
+}
+
+.ys-main-content {
+    min-height: 300px;
+}
+
+.ys-search-history {
+    margin-top: 20px;
+}
+
+.ys-total-results {
+    margin-bottom: 20px;
+    color: #5d5d5d;
+}
+
+.ys-total-results .query,
+.ys-total-results .count {
+    color: #000000;
+}
+
+.ys-video-title {
+    font-weight: bold;
+}
+
+.ys-paginator {
+    margin-top: 20px;
+    padding: 20px 0;
+    border-top: 1px solid #eeeeee;
+    color: #777777;
+}
+
+.ys-footer {
+    margin-top: 100px;
+    padding-top: 30px;
+    padding-bottom: 40px;
+    text-align: left;
+    color: #777777;
+    border-top: 1px solid #e5e5e5;
+}

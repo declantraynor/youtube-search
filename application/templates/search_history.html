@@ -1,0 +1,17 @@
+{# Given a list of tuples describing searches (as url, keywords), this
+   macro creates the markup for displaying the searches as a list of
+   links.
+#}
+{% macro as_list(searches) -%}
+    <ul class="list-unstyled ys-search-history">
+        {% for search_url, search_keywords in searches %}
+            <li>
+                <a href="{{ search_url }}">
+                    {{ search_keywords }}
+                </a>
+            </li>
+        {% else %}
+            <li>None yet. Get searching!</li>
+        {% endfor %}
+    </ul>
+{% endmacro %}

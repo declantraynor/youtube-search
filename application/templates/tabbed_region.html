@@ -1,0 +1,21 @@
+{# Given a list of tuples describing tabs (as name, title, content), this
+   macro creates the markup for a simple Bootstrap tab component.
+#}
+{% macro create(tabs, active_tab) -%}
+    <ul class="nav nav-tabs">
+        {% for tab_name, tab_title, tab_content in tabs %}
+            <li class="{{ tab_name == active_tab and 'active' or '' }}">
+                <a href="/" data-toggle="tab" data-target="#{{ tab_name }}">
+                    {{ tab_title }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="tab-content">
+        {% for tab_name, tab_title, tab_content in tabs %}
+            <div class="tab-pane {{ tab_name == active_tab and 'active fade in' or 'fade' }}" id="{{ tab_name }}">
+                {{ tab_content }}
+            </div>
+        {% endfor %}
+    </div>
+{%- endmacro %}

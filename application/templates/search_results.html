@@ -1,0 +1,52 @@
+{# Given details about a search and a list of video search results, this
+   macro creates markup for a table of results, plus some descriptive
+   information and pagination controls (if required).
+#}
+{% macro as_table(query, total_results, results, results_per_page, next_page_url, prev_page_url) -%}
+    <h3 class="ys-total-results">
+        <span class="query">''{{ query }}'' </span>
+        matched
+        {# The max total returned by the YouTube API is 1000000, even if there
+           are more than 1000000 results.
+        #}
+        <span class="count"> {{ total_results == 1000000 and 'More than %d' % total_results or total_results }} </span>
+        results
+    </h3>
+    <div class="table-responsive">
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Thumbnail</th>
+                    <th>Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                    <tr>
+                        <td class="ys-video-title">{{ result.title }}</td>
+                        <td>{{ result.description }}</td>
+                        <td><img src="{{ result.thumbnail }}"/></td>
+                        <td><a href="{{ result.url }}">Watch</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="ys-paginator">
+        {% if total_results > results_per_page %}
+            <span class="results-per-page">
+                Showing {{ results_per_page }} results per page
+            </span>
+        {% endif %}
+        <div class="btn-group pull-right">
+            {% if prev_page_url %}
+                <a href="{{ prev_page_url }}" class="btn btn-default">Previous</a>
+            {% endif %}
+            {% if next_page_url %}
+                <a href="{{ next_page_url }}" class="btn btn-default">Next</a>
+            {% endif %}
+        </div>
+    </div>
+{%- endmacro %}

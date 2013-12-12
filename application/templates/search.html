@@ -1,0 +1,20 @@
+{% import 'search_history.html' as search_history %}
+{% import 'search_results.html' as search_results %}
+
+{# This template simply adds a results tab to the list of tabs to be
+   rendered in its ancestor template (index.html). The content of the
+   results tab will be the markup produced by search_results.as_table().
+#}
+
+{% set tabs = tabs|default([
+    ('history', 'Search History', search_history.as_list(previous_searches)),
+    ('results', 'Results', search_results.as_table(query,
+                                                   total_results,
+                                                   results,
+                                                   results_per_page,
+                                                   next_page_url,
+                                                   prev_page_url))
+]) -%}
+{% set active_tab = active_tab|default('results') -%}
+
+{% extends 'index.html' %}

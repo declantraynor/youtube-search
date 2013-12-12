@@ -1,0 +1,83 @@
+{# Jinja macros are used to encapsulate re-usable template snippets #}
+
+{% import 'tabbed_region.html' as tabbed_region %}
+{% import 'search_history.html' as search_history %}
+
+{# This template defines the overall page layout for the index page and
+   its descendants (e.g. search.html). The main page content consists of
+   a tabbed region with a single tab showing a list previous searches
+   performed. Descendant templates can change the content of the tabbed
+   region by overriding the 'set tabs' declaration below.
+   See 'search.html' for an example.
+#}
+
+{% set tabs = tabs|default([
+    ('history', 'Search History', search_history.as_list(previous_searches))
+]) -%}
+{% set active_tab = active_tab|default('history') -%}
+
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="/favicon.ico">
+        <link rel="stylesheet" type="text/css" href="/static/thirdparty/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+        <title>YouTube Search</title>
+    </head>
+    <body>
+        <header class="navbar navbar-inverse navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href='./' class="navbar-brand">YouTube Search</a>
+                </div>
+            </div>
+        </header>
+        <main class="container" role="main">
+            <div class="row">
+                <div class="col-xs-12">
+                    {% if error %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error.exclamation }} </strong>
+                            <span>{{ error.description }}</span>
+                        </div>
+                    {% endif %}
+                    <form class="well well-lg" action="/search" method="post">
+                        <div class="form-group">
+                            <label class="control-label">I want to see</label>
+                            <div class="input-group input-group-lg">
+                                <input class="form-control" name="q" type="text" placeholder="{{ suggestion }}" value="{{ query and query or '' }}">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-primary" type="submit">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="ys-main-content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        {{ tabbed_region.create(tabs, active_tab) }}
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="ys-footer">
+            <div class="container">
+                <p>
+                    Crafted with love (and Python) by
+                     <a href="http://twitter.com/declan_traynor">@declan_traynor</a>
+                </p>
+                <p>
+                    Grab the
+                     <a href="http://github.com/declantraynor/youtube-search">source</a>
+                     on GitHub
+                </p>
+            </div>
+        </footer>
+        <script type="text/javascript" src="/static/thirdparty/jquery/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/static/thirdparty/bootstrap/js/bootstrap.min.js"></script>
+    </body>
+</html>

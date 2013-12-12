@@ -1,0 +1,20 @@
+application: your-appengin-app-id-here
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+env_variables:
+  YOUTUBE_API_KEY: your-youtube-api-key-here
+
+libraries:
+- name: jinja2
+  version: latest
+- name: webapp2
+  version: latest
+
+handlers:
+- url: /static
+  static_dir: application/static
+- url: /.*
+  script: run.application

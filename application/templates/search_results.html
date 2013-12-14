@@ -2,7 +2,7 @@
    macro creates markup for a table of results, plus some descriptive
    information and pagination controls (if required).
 #}
-{% macro as_table(query, total_results, results, results_per_page, next_page_url, prev_page_url) -%}
+{% macro as_list(query, total_results, results, results_per_page, next_page_url, prev_page_url) -%}
     <h3 class="ys-total-results">
         <span class="query">''{{ query }}'' </span>
         matched
@@ -12,28 +12,25 @@
         <span class="count"> {{ total_results == 1000000 and 'More than %d' % total_results or total_results }} </span>
         results
     </h3>
-    <div class="table-responsive">
-        <table class="table table-condensed table-striped">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Thumbnail</th>
-                    <th>Link</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for result in results %}
-                    <tr>
-                        <td class="ys-video-title">{{ result.title }}</td>
-                        <td>{{ result.description }}</td>
-                        <td><img src="{{ result.thumbnail }}"/></td>
-                        <td><a href="{{ result.url }}">Watch</a></td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+    <ul class="media-list">
+        {% for result in results %}
+            <li class="media ys-result">
+                <h4 class="list-group-item-heading">
+                    <a href="{{ result.url }}" target="_blank">
+                        {{ result.title }}
+                    </a>
+                </h4>
+                <span class="pull-left ys-thumbnail">
+                    <img class="img-thumbnail media-object" src="{{ result.thumbnail }}"/>
+                </span>
+                <div class="media-body">
+                    <p class="list-group-item-text">
+                        {{ result.description }}
+                    </p>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
     <div class="ys-paginator">
         {% if total_results > results_per_page %}
             <span class="results-per-page">

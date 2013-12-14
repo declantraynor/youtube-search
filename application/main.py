@@ -10,4 +10,4 @@ routes = [
     ('/search', SearchHandler)
 ]
 
-application = webapp2.WSGIApplication(routes, debug=True)
+application = webapp2.WSGIApplication(routes)

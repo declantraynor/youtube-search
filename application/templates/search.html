@@ -8,7 +8,7 @@
 
 {% set tabs = tabs|default([
     ('history', 'Search History', search_history.as_list(previous_searches)),
-    ('results', 'Results', search_results.as_table(query,
+    ('results', 'Results', search_results.as_list(query,
                                                    total_results,
                                                    results,
                                                    results_per_page,

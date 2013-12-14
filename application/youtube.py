@@ -52,7 +52,7 @@ def search_videos(options):
         results.append({
             'title': video['snippet']['title'],
             'description': video['snippet']['description'],
-            'thumbnail': video['snippet']['thumbnails']['default']['url'],
+            'thumbnail': video['snippet']['thumbnails']['medium']['url'],
             'url': 'http://youtube.com/watch?v=%s' % video['id']['videoId']
         })
 
